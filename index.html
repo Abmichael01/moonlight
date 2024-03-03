@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoonLight</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h2 class="logo">MoonLight</h2>
+
+        <ul class="nav">
+            <li class="active-nav home-butt">
+                <a >Home</a>
+            </li>
+
+            <li class="about-butt">
+                <a >About</a>
+            </li>
+
+            <li>
+                <a >Contact Us</a>
+            </li>
+        </ul>
+    </header>
+
+    <div class="hero">
+        <h2>Discover MoonLight: <br>  Where Magic Meets the Night Sky</h2>
+        <button><span>Explore</span></button>
+        <div class="parallax-bg"></div>
+    </div>
+
+    <div class="about-us">
+        <h2>About Us</h2>
+
+        <p>At Moon Light, we believe in the power of enchantment and the allure of the night sky. Our journey began with a simple desire to capture the magic of moonlit nights and share it with the world. Inspired by the celestial wonders that grace our evenings, we embarked on a mission to create a sanctuary where dreams take flight and adventures await under the glowing moon.</p>
+
+        <p> Nestled within the shimmering embrace of the cosmos, Moon Light invites you to immerse yourself in a realm of boundless imagination and endless possibility. Whether you're seeking solace in the tranquil glow of moonbeams or embarking on a voyage of discovery across the star-strewn heavens, our website is your gateway to a universe of wonder and awe.</p>
+
+        <p>Join us as we illuminate the darkness and illuminate your journey under the night sky.</p>
+
+        <div class="buttons">
+            <button><i class="fa-brands fa-facebook-f"></i></button>
+            <button><i class="fa-brands fa-instagram"></i></button>
+            <button><i class="fa-brands fa-whatsapp"></i></button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('scroll', function() {
+            var scrolled = window.scrollY;
+            var parallaxBg = document.querySelector('.parallax-bg');
+            var scale = 1 + (scrolled * 0.0007);
+            parallaxBg.style.transform = 'scale(' + scale + ')'; /* Adjust the speed here */
+        });
+
+        const homeButt = document.querySelector(".home-butt")
+        const aboutButt = document.querySelector(".about-butt")
+        const hero = document.querySelector(".hero")
+        const aboutUs = document.querySelector(".about-us")
+
+        homeButt.addEventListener("click", ()=>{
+            homeButt.classList.add("active-nav")
+            aboutButt.classList.remove("active-nav")
+            hero.scrollIntoView()
+        })
+
+        aboutButt.addEventListener("click", ()=>{
+            homeButt.classList.remove("active-nav")
+            aboutButt.classList.add("active-nav")
+            aboutUs.scrollIntoView()
+        })
+
+        function createObserver(targetSection, homeButton, aboutButton) {
+            // Create a new Intersection Observer
+            var observer = new IntersectionObserver(function(entries) {
+                // Loop through the entries array
+                entries.forEach(function(entry) {
+                    // If the target section is in view
+                    if (entry.isIntersecting) {
+                        // Toggle classes on buttons based on the target section
+                        if (targetSection === hero) {
+                            homeButton.classList.add("active-nav");
+                            aboutButton.classList.remove("active-nav");
+                        } else if (targetSection === aboutUs) {
+                            homeButton.classList.remove("active-nav");
+                            aboutButton.classList.add("active-nav");
+                        }
+                    }
+                });
+            }, { threshold: 1 });
+
+            
+            observer.observe(targetSection);
+        }
+
+        createObserver(hero, homeButt, aboutButt);
+        createObserver(aboutUs, homeButt, aboutButt);
+    </script>
+</body>
+</html>
